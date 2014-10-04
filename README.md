@@ -1,6 +1,6 @@
 ## Douglas-Rachford splitting
 
-This repository contains implementations of the Douglas-Rachford operators
+This repository contains implementations of the Douglas-Rachford operator
 splitting method for solving convex optimization problems of the form
 
 ```
@@ -15,3 +15,4 @@ where f(x) is quadratic.
 
 [1] P. Patrinos, L. Stella, A. Bemporad, “Douglas-Rachford Splitting: Complexity
 Estimates and Accelerated Variants,” [arXiv:1407.6723](http://arxiv.org/abs/1407.6723) [math.OC], Sep. 2014.
+To appear in *Proceedings of the 53nd IEEE Conference on Decision and Control*.
