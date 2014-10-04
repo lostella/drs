@@ -7,7 +7,7 @@ splitting method for solving convex optimization problems of the form
 minimize f(x) + g(x)
 ```
 
-The implementations and the proposed tests reflect the analysis contained in
+The proposed implementations and tests reflect the analysis contained in
 [1]. In particular, a *fast* version of the method is provided for problems
 where f(x) is quadratic.
 
