@@ -11,6 +11,10 @@ The proposed implementations and tests reflect the analysis contained in
 [1]. In particular, a *fast* version of the method is provided for problems
 where f(x) is quadratic.
 
+The problems for which the algorithms are implemented are:
+* Box constrained QPs
+* L1-regularized least square regression
+
 ### References
 
 [1] P. Patrinos, L. Stella, A. Bemporad, “Douglas-Rachford Splitting: Complexity
