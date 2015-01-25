@@ -45,34 +45,72 @@ Lh = (1+gammas*Lf)./(1-gammas*Lf).*(1-gammas*mf)./(1+gammas*mf);
 %stats{end}.pobj = f;
 %stats{end}.x = x;
 
-%% Run DRS
-figure(1);
-for i=1:length(gammas)
-    optDRS.tolr = TOL;
-    optDRS.maxit = MAXIT;
-    optDRS.fast = 0;
-    gam = gammas(i);
-    lam = 1/Lh(i);
-    fprintf('Running DRS, gamma = %7.4e\n', gam);
-    t0 = tic;
-    stats{end+1} = boxqp_drs(Q, q, xmin, xmax, gam, lam, optDRS);
-    stats{end}.time = toc(t0);
-    semilogy(1:stats{end}.it, (stats{end}.pobj-fstar)/(1+abs(fstar)),linest{i})
-    hold on;
+if 0
+    %% Run DRS
+    figure(1);
+    for i=1:length(gammas)
+        optDRS.tolr = TOL;
+        optDRS.maxit = MAXIT;
+        optDRS.fast = 0;
+        gam = gammas(i);
+        lam = 1/Lh(i);
+        fprintf('Running DRS, gamma = %7.4e\n', gam);
+        t0 = tic;
+        stats{end+1} = boxqp_drs(Q, q, xmin, xmax, gam, lam, optDRS);
+        stats{end}.time = toc(t0);
+        semilogy(1:stats{end}.it, max(1e-18,stats{end}.pobj-fstar)/(1+abs(fstar)),linest{i})
+        hold on;
+    end
 end
 
-%% Run DRS
-figure(2);
-for i=1:length(gammas)
-    optDRS.tolr = TOL;
-    optDRS.maxit = MAXIT;
-    optDRS.fast = 1;
-    gam = gammas(i);
-    lam = 1/Lh(i);
-    fprintf('Running Fast DRS, gamma = %7.4e\n', gam);
-    t0 = tic;
-    stats{end+1} = boxqp_drs(Q, q, xmin, xmax, gam, lam, optDRS);
-    stats{end}.time = toc(t0);
-    semilogy(1:stats{end}.it, (stats{end}.pobj-fstar)/(1+abs(fstar)),linest{i})
-    hold on;
+if 0
+    %% Run Fast DRS
+    figure(2);
+    for i=1:length(gammas)
+        optDRS.tolr = TOL;
+        optDRS.maxit = MAXIT;
+        optDRS.fast = 1;
+        gam = gammas(i);
+        lam = 1/Lh(i);
+        fprintf('Running Fast DRS, gamma = %7.4e\n', gam);
+        t0 = tic;
+        stats{end+1} = boxqp_drs(Q, q, xmin, xmax, gam, lam, optDRS);
+        stats{end}.time = toc(t0);
+        semilogy(1:stats{end}.it, max(1e-18,stats{end}.pobj-fstar)/(1+abs(fstar)),linest{i})
+        hold on;
+    end
 end
+
+if 1
+    %% Run DRS with gamma > 1/Lf
+    figure(3);
+    for i=1:4
+        optDRS.tolr = TOL;
+        optDRS.maxit = MAXIT;
+        optDRS.fast = 0;
+        gam = i*10;
+        lam = 1;
+        fprintf('Running DRS, gamma = %7.4e\n', gam);
+        t0 = tic;
+        stats{end+1} = boxqp_drs(Q, q, xmin, xmax, gam, lam, optDRS);
+        stats{end}.time = toc(t0);
+        semilogy(1:stats{end}.it, max(1e-18,stats{end}.pobj-fstar)/(1+abs(fstar)),linest{i})
+        hold on;
+    end
+end
+
+%% Run (fast) FBS
+gam = 1/Lf;
+optFBS = optDRS;
+optFBS.fast = 0;
+fprintf('Running FBS, gamma = %7.4e\n', gam);
+t0 = tic;
+stats{end+1} = boxqp_fbs(Q, q, xmin, xmax, gam, optFBS);
+stats{end}.time = toc(t0);
+semilogy(1:stats{end}.it, max(1e-18,stats{end}.pobj-fstar)/(1+abs(fstar)),':k')
+optFBS.fast = 1;
+fprintf('Running fast FBS, gamma = %7.4e\n', gam);
+t0 = tic;
+stats{end+1} = boxqp_fbs(Q, q, xmin, xmax, gam, optFBS);
+stats{end}.time = toc(t0);
+semilogy(1:stats{end}.it, max(1e-18,stats{end}.pobj-fstar)/(1+abs(fstar)),'--k')
