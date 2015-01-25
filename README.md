@@ -19,4 +19,4 @@ The problems for which the algorithms are implemented are:
 
 [1] P. Patrinos, L. Stella, A. Bemporad, “Douglas-Rachford Splitting: Complexity
 Estimates and Accelerated Variants,” [arXiv:1407.6723](http://arxiv.org/abs/1407.6723) [math.OC], Sep. 2014.
-To appear in *Proceedings of the 53nd IEEE Conference on Decision and Control*.
+In *Proceedings of the 53nd IEEE Conference on Decision and Control*.
